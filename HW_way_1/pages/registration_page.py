@@ -7,7 +7,7 @@ from HW_way_1.HW_way_1 import resources
 class RegistrationPage:
 
     def open(self):
-        browser.open('/automation-practice-form')
+        browser.open('https://demoqa.com/automation-practice-form')
         browser.driver.execute_script("$('#fixedban').remove()")
         browser.driver.execute_script("$('footer').remove()")
         browser.config.timeout = 30
