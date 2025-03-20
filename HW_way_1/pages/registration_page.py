@@ -1,8 +1,6 @@
 import os
 
-from selene import browser, command, have
-
-
+from selene import browser, have, command
 from HW_way_1.HW_way_1 import resources
 
 
@@ -23,8 +21,10 @@ class RegistrationPage:
     def email(self, value):
         browser.element('#userEmail').type(value)
 
-    def gender(self):
-        browser.element('#gender-radio-2').perform(command.js.click)
+    def gender(self, value):
+        # browser.element('#gender-radio-2').perform(command.js.click)
+        # browser.element('#gender-radio-1 + .custom-control-label')
+        browser.element(f'[name=gender][value={value}]').perform(command.js.click)
 
 
     def dateOfBirth(self, month, day, year):
@@ -42,8 +42,9 @@ class RegistrationPage:
         browser.element('#subjectsInput').type(value)
         browser.element('#react-select-2-option-0').click()
 
-    def hobbies(self):
-        browser.element('#hobbies-checkbox-1').perform(command.js.click)
+    def hobbies(self,value):
+        # browser.element('#hobbies-checkbox-1').perform(command.js.click)
+        browser.all('[for^=hobbies-checkbox]').element_by(have.text(value)).click()
 
     def picture(self,path):
         browser.element("#uploadPicture").send_keys(
