@@ -1,4 +1,5 @@
 import os
+import logging
 from selene import browser
 import pytest
 from selenium import webdriver
@@ -7,6 +8,12 @@ from dotenv import load_dotenv
 
 from HW_way_1.Utils import attach
 
+logger = logging.getLogger(__name__)
+
+load_dotenv()
+selenoid_login = os.getenv("SELENOID_LOGIN")
+selenoid_pass = os.getenv("SELENOID_PASS")
+selenoid_url = os.getenv("SELENOID_URL")
 
 @pytest.fixture
 def selenoid():
@@ -33,8 +40,9 @@ def selenoid():
     yield
     browser.quit()
 
+
 @pytest.fixture()
-def selenoid_and_attachments():
+def selenoid2():
     options = Options()
     selenoid_capabilities = {
         "browserName": "chrome",
@@ -45,10 +53,22 @@ def selenoid_and_attachments():
         }
     }
 
+
+
+    selenoid_full_url = f"https://{selenoid_login}:{selenoid_pass}@{selenoid_url}/wd/hub"
+    selenoid_full_url = f"https://user1:1234@selenoid.autotests.cloud/wd/hub"
+
+    logger.info(f"Selenoid url: {selenoid_full_url}")
+    print()
+    print(f"Selenoid url: {selenoid_full_url}")
+
     options.capabilities.update(selenoid_capabilities)
     driver = webdriver.Remote(
-        command_executor=f"https://{selenoid_login}:{selenoid_pass}@{selenoid_url}/wd/hub",
+        command_executor=selenoid_full_url,
         options=options)
+
+    browser.config.window_height = 1080  # задает высоту окна браузера
+    browser.config.window_width = 1920
 
     browser.config.driver = driver
 
@@ -58,15 +78,6 @@ def selenoid_and_attachments():
     attach.add_logs(browser)
     attach.add_video(browser)
     attach.add_screenshot(browser)
-
-
-@pytest.fixture(scope="session", autouse=True)
-def load_env():
-    load_dotenv()
-
-selenoid_login = os.getenv("SELENOID_LOGIN")
-selenoid_pass = os.getenv("SELENOID_PASS")
-selenoid_url = os.getenv("SELENOID_URL")
 
 
 @pytest.fixture(scope='session')
