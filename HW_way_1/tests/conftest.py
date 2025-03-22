@@ -51,10 +51,13 @@ def selenoid():
         options=options)
 
     browser.config.driver = driver
-    attach.add_html()
-    attach.add_logs()
-    attach.add_video()
-    attach.add_screenshot()
+
+    yield
+
+    attach.add_html(browser)
+    attach.add_logs(browser)
+    attach.add_video(browser)
+    attach.add_screenshot(browser)
 
 
 @pytest.fixture(scope="session", autouse=True)
