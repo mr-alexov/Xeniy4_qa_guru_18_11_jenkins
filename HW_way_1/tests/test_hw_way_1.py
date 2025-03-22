@@ -3,7 +3,7 @@ import allure
 from HW_way_1.pages.registration_page import RegistrationPage
 
 
-def test_form(browser_manager):
+def test_form(selenoid):
     registration_page = RegistrationPage()
 
     with allure.step('Открываем главную страницу'):
