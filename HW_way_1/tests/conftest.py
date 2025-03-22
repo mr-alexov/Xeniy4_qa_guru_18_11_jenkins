@@ -8,33 +8,33 @@ from dotenv import load_dotenv
 from HW_way_1.Utils import attach
 
 
-# @pytest.fixture
-# def selenoid():
-#     options = Options()
-#     selenoid_capabilities = {
-#         "browserName": "chrome",
-#         "browserVersion": "122.0",
-#         "selenoid:options": {
-#             "enableVNC": True,
-#             "enableVideo": True
-#         }
-#     }
-#     options.capabilities.update(selenoid_capabilities)
-#     driver = webdriver.Remote(
-#         command_executor=f"https://user1:1234@selenoid.autotests.cloud/wd/hub",
-#         options=options
-#     )
-#
-#     browser.config.window_height = 1080  # задает высоту окна браузера
-#     browser.config.window_width = 1920
-#
-#     browser.config.driver = driver
-#
-#     yield
-#     browser.quit()
+@pytest.fixture
+def selenoid():
+    options = Options()
+    selenoid_capabilities = {
+        "browserName": "chrome",
+        "browserVersion": "122.0",
+        "selenoid:options": {
+            "enableVNC": True,
+            "enableVideo": True
+        }
+    }
+    options.capabilities.update(selenoid_capabilities)
+    driver = webdriver.Remote(
+        command_executor=f"https://user1:1234@selenoid.autotests.cloud/wd/hub",
+        options=options
+    )
+
+    browser.config.window_height = 1080  # задает высоту окна браузера
+    browser.config.window_width = 1920
+
+    browser.config.driver = driver
+
+    yield
+    browser.quit()
 
 @pytest.fixture()
-def selenoid():
+def selenoid_and_attachments():
     options = Options()
     selenoid_capabilities = {
         "browserName": "chrome",
