@@ -6,6 +6,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from dotenv import load_dotenv
 
+from HW_way_1.Utils import attach
+
 
 # @pytest.fixture
 # def selenoid():
@@ -50,6 +52,10 @@ def selenoid():
         options=options)
 
     browser.config.driver = driver
+    attach.add_html()
+    attach.add_logs()
+    attach.add_video()
+    attach.add_screenshot()
 
 
 @pytest.fixture(scope="session", autouse=True)
